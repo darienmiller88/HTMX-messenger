@@ -22,19 +22,18 @@ h1{
 
 .messages{
     display: flex;
-    align-items: end;
     border: 2px solid black;
     width: 60vw;
     height: 70vh;
     margin: auto;
-    overflow-y: scroll;
 }
 
 .messages .inner-messages{
     display: flex;
     flex-direction: column;
+    align-self: flex-end;
+    max-height: 100%;
     width: 100%;
-    border: 2px solid red;
     overflow-y: scroll;
 }
 
