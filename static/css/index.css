@@ -24,13 +24,15 @@ h1{
     display: flex;
     border: 2px solid black;
     width: 60vw;
-    height: 70vh;
+    height: 65vh;
     margin: auto;
 }
 
 .messages .inner-messages{
     display: flex;
     flex-direction: column;
+
+    /* Align itself tobe at the bottom of the "messages" container, */
     align-self: flex-end;
     max-height: 100%;
     width: 100%;
@@ -47,10 +49,39 @@ h1{
 }
 
 .messages .inner-messages .your-message{
-    background-color: cyan;
+    background-color: rgb(74, 138, 224);
     align-self: flex-end;
 }
 
 .messages .inner-messages .other-message{
     background-color: gray;
+}
+
+.input-wrapper{
+    display: grid;
+    grid-template-columns: 80% auto;
+    width: 60vw;
+    margin: auto;
+}
+
+.input-wrapper input{
+    font-size: 20px;
+    padding: 15px;
+}
+
+.input-wrapper button{
+    font-size: 20px;
+    font-weight: 600;
+    padding: 15px;
+    transition: 0.3s;
+    background-color: rgb(74, 138, 224);
+    border: none;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.input-wrapper button:hover{
+    cursor: pointer;
+    background-color: rgb(74, 138, 224);
+    color: white;
 }
