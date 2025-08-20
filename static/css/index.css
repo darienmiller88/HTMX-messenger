@@ -1,3 +1,21 @@
 h1{
     color: red;
 }
+
+.header{
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    margin: auto;
+}
+
+.header span{
+    font-size: 35px;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.header img{
+    height: 80px;
+    width: auto;
+}
