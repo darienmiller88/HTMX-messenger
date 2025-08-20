@@ -16,11 +16,12 @@ func main(){
 		panic(err)
 	}
 
+	app.Handle("/static/*", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	app.Get("/", func(res http.ResponseWriter, req *http.Request) {
 		err := tmpl.ExecuteTemplate(res, "index.html", nil)
 
 		if err != nil {
-			fmt.Println("err:", err)
+			http.Error(res, err.Error(), http.StatusInternalServerError)
 		}
 	})
 
