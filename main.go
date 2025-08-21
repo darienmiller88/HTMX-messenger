@@ -25,6 +25,40 @@ func main(){
 
 	fmt.Println(node.Config().Name)
 
+	node.OnConnect(func(client *centrifuge.Client) {
+		// In our example transport will always be Websocket but it can be different.
+		transportName := client.Transport().Name()
+
+		// In our example clients connect with JSON protocol but it can also be Protobuf.
+		transportProto := client.Transport().Protocol()
+		fmt.Printf("client connected via %s (%s)", transportName, transportProto)
+
+		client.OnSubscribe(func(e centrifuge.SubscribeEvent, cb centrifuge.SubscribeCallback) {
+			fmt.Printf("client subscribes on channel %s", e.Channel)
+			cb(centrifuge.SubscribeReply{}, nil)
+		})
+
+		client.OnPublish(func(e centrifuge.PublishEvent, cb centrifuge.PublishCallback) {
+			fmt.Printf("client publishes into channel %s: %s", e.Channel, string(e.Data))
+			cb(centrifuge.PublishReply{}, nil)
+		})
+
+		// Set Disconnect handler to react on client disconnect events.
+		client.OnDisconnect(func(e centrifuge.DisconnectEvent) {
+			fmt.Printf("client disconnected")
+		})
+	})
+
+	// Run node. This method does not block. See also node.Shutdown method
+	// to finish application gracefully.
+	if err := node.Run(); err != nil {
+		panic(err)
+	}
+
+	// Serve Websocket connections using WebsocketHandler.
+	wsHandler := centrifuge.NewWebsocketHandler(node, centrifuge.WebsocketConfig{})
+	
+	app.Handle("/connection/websocket", auth(wsHandler))
 	app.Handle("/static/*", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	app.Get("/", func(res http.ResponseWriter, req *http.Request) {
 		err := tmpl.ExecuteTemplate(res, "index.html", nil)
