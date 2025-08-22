@@ -16,4 +16,5 @@ sub.on('publication', function(ctx) {
 //subscribe to the channel (unnecessary second step in my opinion, but necessary)
 sub.subscribe();
 
+//Complete the server connection, allowing the client to send real time messages.
 centrifuge.connect();
